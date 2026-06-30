@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 图形图像处理技术研究综述 — 演示网站
 
-## Getting Started
+> **论文题目**：图形图像处理技术研究综述——基于深度学习的图像处理与方法综述
+>
+> 本网站是一个面向 **课堂演示 / 答辩展示** 的单页应用，以高对比度视觉风格（暗色背景 + 琥珀橙高亮）系统展示论文的核心内容，包括：技术演进时间线、方法分类、基准数据集、应用场景以及团队分工。
 
-First, run the development server:
+---
+
+## 🚀 快速开始
+
+### 前置要求
+
+| 工具          | 最低版本 |
+| :------------ | :------- |
+| **Node.js**   | ≥ 18     |
+| **npm** / pnpm / yarn / bun | 任意 |
+
+### 1. 安装依赖
+
+```bash
+npm install
+```
+
+### 2. 启动开发服务器
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+打开浏览器访问 **http://localhost:3000** 即可看到网站。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> 页面内容全部由 `src/data/paperData.ts` 驱动，修改数据后页面会**自动热更新**。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. （可选）构建生产版本
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 项目结构
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/                  # 页面路由 (Next.js App Router)
+│   ├── page.tsx          # 首页 — 时间轴
+│   ├── methods/page.tsx  # 方法页 — 技术分类详解
+│   ├── datasets/page.tsx # 数据页 — 基准数据集表格
+│   ├── about/page.tsx    # 关于页 — 团队 & 应用场景
+│   ├── layout.tsx        # 全局布局（导航栏 + 页脚）
+│   └── globals.css       # 全局样式（Tailwind + 自定义）
+├── components/           # 可复用组件
+│   ├── Navbar.tsx        # 顶部导航栏
+│   ├── Footer.tsx        # 页脚
+│   └── TimelineSection.tsx # 时间轴组件
+└── data/
+    └── paperData.ts      # ✅ 网站内容的唯一数据源
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧭 页面导航
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 页面       | 路由              | 内容                             |
+| :--------- | :---------------- | :------------------------------- |
+| **首页**   | `/`               | 四阶段技术演进时间轴              |
+| **方法**   | `/methods`        | 每个阶段的代表算法详细卡片         |
+| **数据**   | `/datasets`       | 主流基准数据集对比表格 + 指标折线图 |
+| **关于**   | `/about`          | 落地应用场景 + 团队分工贡献表      |
+
+---
+
+## 📝 如何修改内容
+
+所有展示文本均集中在 **`src/data/paperData.ts`** 中，**无需修改组件即可更新网站内容**。
+
+- 修改技术节点（SIFT、AlexNet、ViT 等）→ 编辑 `timelinePhases` 数组
+- 修改基准数据集表格 → 编辑 `datasetTable` 数组
+- 修改团队分工 → 编辑 `teamMembers` 数组
+- 修改应用场景 → 编辑 `applications` 数组
+
+> **注意**：`P_DATA.md` 是内容的知识库原始参考，**网站实际渲染的内容以 `src/data/paperData.ts` 为准**。
+
+---
+
+## 🛠️ 技术栈
+
+| 技术                 | 用途                     |
+| :------------------- | :----------------------- |
+| **Next.js 16**       | React 框架 + App Router  |
+| **React 19**         | UI 组件                  |
+| **TypeScript**       | 类型安全                 |
+| **Tailwind CSS 4**   | 样式 + 暗色主题           |
+| **Framer Motion**    | 入场 / 滚动动画           |
+| **Lucide React**     | 图标库                   |
+
+---
+
+## 📦 可用脚本
+
+```bash
+npm run dev      # 启动开发服务器（热更新）
+npm run build    # 构建生产版本
+npm start        # 启动生产服务器
+npm run lint     # 代码检查
+```
+
+---
+
+## 👥 团队
+
+| 成员       | 角色             |
+| :--------- | :--------------- |
+| **郑玖军** | 论文统稿 / 项目统筹 |
+| 陈星亮     | 论文设计 / 引言撰写 |
+| 魏泊帆     | 核心网络章节 / 图表 |
+| 蒋韩俊     | 检测与分割 / 文献调研 |
+| 罗浩东     | 数据集章节         |
+| 马君好     | 应用场景（安防/驾驶/医学） |
+| 吕恒睿     | 应用场景（遥感/工业检测） |
+| 蒋松       | 排版 / 格式修订   |
+
+---
+
+*本项目基于 Next.js 构建，由 `create-next-app` 初始化。*
